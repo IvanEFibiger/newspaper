@@ -1,0 +1,36 @@
+body.light-mode {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Estilos para el modo oscuro */
+body.dark-mode {
+  background-color: #333333;
+  color: #ffffff;
+}
+.container {
+  position: relative;
+}
+#titulo-principal{
+  text-decoration: none;
+}
+
+.btn-carousel-prev,
+.btn-carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.btn-carousel-prev {
+  left: 0;
+}
+
+.btn-carousel-next {
+  right: 0;
+}
+
+/* #img-destacadas {
+  max-width: 50%;
+} */

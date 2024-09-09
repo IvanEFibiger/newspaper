@@ -14,7 +14,7 @@ from .forms import CustomUserCreationForm
 from django.contrib import messages
 
 
-@login_required(login_url='iniciar_sesion')
+
 def index(request):
     # Obtener todos los artículos ordenados por fecha de publicación más reciente
     articles = Article.objects.filter(is_important=True).order_by('-published_date')

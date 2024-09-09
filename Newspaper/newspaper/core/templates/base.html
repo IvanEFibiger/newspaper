@@ -86,6 +86,8 @@
 
 
 
+
+
   <div class="container">
     <main class="">
         {% block content %}
@@ -94,55 +96,57 @@
     
 
 
-    </main>
-
-    <div class="container">
-      <footer class="py-5">
-        <div class="row">
-          <div class="col-6 col-md-6 mb-2">
-            <h5>Visitar</h5>
-            <ul class="nav flex-column">
-              <li class="nav-item mb-2"><a href="{% url 'index' %}" class="nav-link p-0 text-body-secondary">Inicio</a></li>
-              <li class="nav-item mb-2"><a href="{% url 'iniciar_sesion' %}" class="nav-link p-0 text-body-secondary">Iniciar Sesión</a></li>
-              <li class="nav-item mb-2"><a href="{% url 'registrarse' %}" class="nav-link p-0 text-body-secondary">Registrarse</a></li>
-            </ul>
-          </div>
-        
-        
-          <div class="col-6 col-md-6 mb-2">
-            <h5>Visitar</h5>
-            <ul class="nav flex-column">
-              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Nostros</a></li>
-              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Contacto</a></li>
-              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Legales</a></li>
-            </ul>
-          </div>
-      
+        <div class="container">
+          <footer class="py-5">
+            <div class="row">
+              <div class="col-6 col-md-6 mb-2">
+                <h5>Visitar</h5>
+                <ul class="nav flex-column">
+                  <li class="nav-item mb-2"><a href="{% url 'index' %}" class="nav-link p-0 text-body-secondary">Inicio</a></li>
+                  {% if not request.user.is_authenticated %}
+                  <li class="nav-item mb-2"><a href="{% url 'iniciar_sesion' %}" class="nav-link p-0 text-body-secondary">Iniciar Sesión</a></li>
+                  <li class="nav-item mb-2"><a href="{% url 'registrarse' %}" class="nav-link p-0 text-body-secondary">Registrarse</a></li>
+                {% else %}
+                  <li class="nav-item mb-2"><a href="{% url 'cerrar_sesion' %}" class="nav-link p-0 text-body-secondary">Cerrar Sesión</a></li>
+                {% endif %}
+                </ul>
+              </div>
+            
+            
+              <div class="col-6 col-md-6 mb-2">
+                <h5>Visitar</h5>
+                <ul class="nav flex-column">
+                  <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Nostros</a></li>
+                  <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Contacto</a></li>
+                  <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Legales</a></li>
+                </ul>
+              </div>
+          
+            </div>
+            <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+              <p>© Copyright 2024, Todos los derechos reservados. Powered by Ivan Fibiger</p>
+              <ul class="list-unstyled d-flex">
+                <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi" width="24" height="24">
+                      <use xlink:href="#twitter"></use>
+                    </svg></a></li>
+                <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi" width="24" height="24">
+                      <use xlink:href="#instagram"></use>
+                    </svg></a></li>
+                <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi" width="24" height="24">
+                      <use xlink:href="#facebook"></use>
+                    </svg></a></li>
+              </ul>
+            </div>
+          </footer>
         </div>
-        <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
-          <p>© Copyright 2024, Todos los derechos reservados. Powered by Ivan Fibiger</p>
-          <ul class="list-unstyled d-flex">
-            <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi" width="24" height="24">
-                  <use xlink:href="#twitter"></use>
-                </svg></a></li>
-            <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi" width="24" height="24">
-                  <use xlink:href="#instagram"></use>
-                </svg></a></li>
-            <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi" width="24" height="24">
-                  <use xlink:href="#facebook"></use>
-                </svg></a></li>
-          </ul>
-        </div>
-      </footer>
-    </div>
-  </div>
-
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <script src="{% static 'js/index.js' %}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-    crossorigin="anonymous"></script>
-
-</body>
-</html>
+      </div>
+    
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+      <script src="{% static 'js/index.js' %}"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    
+    </body>
+    </html>

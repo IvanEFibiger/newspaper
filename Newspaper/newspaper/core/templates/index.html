@@ -1,103 +1,115 @@
 {% extends 'base.html' %}
-
+{% load custom_filters %}
 
 {% block content %}
 
-  <div class="container">
+<div class="container">
     <main class="">
-      <!-- principal -->
-      <div class="container">
-        <!-- Mostrar el artículo destacado -->
-        {% if featured_article %}
-          <div class="p-4 p-md-5 mb-4 rounded text-bg-dark">
-            <div class="row">
-              <div class="col-md-6 px-0">
-                <h1 class="display-4 fst-italic">{{ featured_article.title }}</h1>
-                <p class="lead my-3">{{ featured_article.lead }}</p>
-                <p class="lead mb-0"><a href="{% url 'article_detail' featured_article.id %}" class="text-white fw-bold">Continuar leyendo...</a></p> 
-              </div>
-              <div class="col-md-6 px-0">
-                <img src="{{ featured_article.media.url }}" alt="{{ featured_article.title }}" class="img-fluid" id="noticia_destacada_img">
-              </div>
-            </div>
-          </div>
-        {% else %}
-          <p>No hay artículos destacados en este momento.</p>
-        {% endif %}
-      </div>
-  <!-- destacadas -->
-      <div class="row row-cols-md-2 g-4 mb-2">
-        {% for article in page.object_list %}
-        <div class="col">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary">{{ article.category.name }}</strong>
-                    <h3 class="mb-0">{{ article.title }}</h3>
-                    <div class="mb-1 text-muted">{{ article.published_date|date:"M d, Y" }}</div>
-                    <p class="card-text mb-auto">{{ article.lead|slice:":200" }}...</p>
-                    <a href="{% url 'article_detail' article.id %}" class="stretched-link">Continuar leyendo...</a>
-                </div>
-                <div class="col d-none d-lg-block">
-                    {% if article.media %}
-                    <img src="{{ article.media.url }}" alt="Thumbnail" class="img-fluid" id="img-destacadas">
-                    {% else %}
-                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img"
-                        aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
-                            dy=".3em">Thumbnail</text>
-                    </svg>
-                    {% endif %}
+        <!-- principal -->
+        <div class="container">
+            <!-- Mostrar el artículo destacado -->
+            {% if featured_article %}
+            <div class="p-4 p-md-5 mb-4 rounded text-bg-dark">
+                <div class="row">
+                    <div class="col-md-6 px-0">
+                        <h1 class="display-4 fst-italic">{{ featured_article.title }}</h1>
+                        <p class="lead my-3">{{ featured_article.lead }}</p>
+                        <p class="lead mb-0">
+                            <a href="{% url 'article_detail' featured_article.id %}" class="text-white fw-bold">Continuar
+                                leyendo...</a>
+                        </p>
+                    </div>
+                    <div class="col-md-6 px-0">
+                        <img src="{{ featured_article.media.url }}" alt="{{ featured_article.title }}"
+                            class="img-fluid" id="noticia_destacada_img">
+                    </div>
                 </div>
             </div>
+            {% else %}
+            <p>No hay artículos destacados en este momento.</p>
+            {% endif %}
         </div>
-        {% endfor %}
-    </div>
-    
-    <!-- Paginación -->
-    <div class="text-center mb-3">
-        {% if page.has_previous %}
+
+        <!-- destacadas -->
+        <div class="row row-cols-md-2 g-4 mb-2">
+            {% for article in page.object_list %}
+            <div class="col">
+                <div
+                    class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <strong class="d-inline-block mb-2 text-primary">{{ article.category.name }}</strong>
+                        <h3 class="mb-0">{{ article.title }}</h3>
+                        <div class="mb-1 text-muted">{{ article.published_date|date:"M d, Y" }}</div>
+                        <p class="card-text mb-auto">{{ article.lead|slice:":200" }}...</p>
+                        <a href="{% url 'article_detail' article.id %}" class="stretched-link">Continuar leyendo...</a>
+                    </div>
+                    <div class="col d-none d-lg-block">
+                        {% if article.media %}
+                        <img src="{{ article.media.url }}" alt="Thumbnail" class="img-fluid" id="img-destacadas">
+                        {% else %}
+                        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg"
+                            role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+                            focusable="false">
+                            <title>Placeholder</title>
+                            <rect width="100%" height="100%" fill="#55595c"></rect>
+                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                        </svg>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Paginación -->
+        <div class="text-center mb-3">
+            {% if page.has_previous %}
             <a class="btn btn-primary mx-2" href="?page={{ page.previous_page_number }}">
                 <i class="fas fa-arrow-left"></i> Anterior
             </a>
-        {% endif %}
-        {% if page.has_next %}
+            {% endif %}
+            {% if page.has_next %}
             <a class="btn btn-primary mx-2" href="?page={{ page.next_page_number }}">
                 Siguiente <i class="fas fa-arrow-right"></i>
             </a>
-        {% endif %}
-    </div>
-
-      
-      <!-- secciones -->
-      {% for category, articles in articles_by_category.items %}
-      <div class="container border rounded mb-3">
-        <div class="row mb-4">
-          <h2 class="text-center">
-            <a href="{% url 'category_detail' category %}">{{ category }}</a>
-          </h2>
-          {% for article in articles %}
-            <div class="col-md-4">
-              <h3 class="mb-0">{{ article.title }}</h3>
-              <div class="mb-1 text-muted">{{ article.published_date|date:"M d" }}</div>
-              <p class="mb-auto">{{ article.lead }}</p>
-              {% if article.media %}
-                    <img src="{{ article.media.url }}" alt="Thumbnail" class="img-fluid" id="img-destacadas">
-                    {% else %}
-                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img"
-                    aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
-                        dy=".3em">Thumbnail</text>
-                </svg>
-                {% endif %}
-              <a href="{% url 'article_detail' article.id %}" class="stretched-link">Leer más</a>
-            </div>
-          {% endfor %}
+            {% endif %}
         </div>
-      </div>
-    {% endfor %}
 
+        <!-- secciones -->
+        {% for category, articles in articles_by_category.items %}
+        <div class="container border rounded mb-3">
+          <div class="row mb-4">
+            <h2 class="text-center">
+              {{ category }}
+            </h2>
+            {% for article in articles %}
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h3 class="mb-0">{{ article.title }}</h3>
+                  <div class="mb-1 text-muted">{{ article.published_date|date:"M d" }}</div>
+                  <p class="mb-auto">{{ article.lead }}</p>
+                  {% if article.media %}
+                    <img src="{{ article.media.url }}" alt="Thumbnail" class="img-fluid" id="img-destacadas">
+                  {% else %}
+                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img"
+                      aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                      <title>Placeholder</title>
+                      <rect width="100%" height="100%" fill="#55595c"></rect>
+                      <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                    </svg>
+                  {% endif %}
+                </div>
+                <div class="card-footer">
+                  <a href="{% url 'article_detail' article.id %}" class="btn btn-primary">Leer más</a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
     </main>
+</div>
 
-    {% endblock  %} 
+{% endblock %}

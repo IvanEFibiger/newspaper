@@ -1,36 +1,42 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
-
-
   <div class="container-fluid">
     <main class="mt-4">
       <div class="container">
-        <h2 class="mb-3 text-center display-2">{{article_detail.title}}</h2>
+        <h2 class="mb-3 text-center display-2">{{ article_detail.title }}</h2>
         <img src="{{ article_detail.media.url }}" alt="{{ article_detail.title }}" class="img-fluid mb-3">
-        <h3 class="mb-3 text-center">{{ featured_article.lead}}</h3>
+        <h3 class="mb-3 text-center">{{ article_detail.lead }}</h3>
         <span class="text-muted mr-2">{{ article_detail.published_date }}</span>
-        <span class="badge bg-primary text-light mr-2">{{ article_detail.category}}</span>
-        <span class="badge bg-danger"><i class="bi bi-fire"></i> 23</span>
-        <p class="mt-4">
-          {{article_detail.body}}
-        </p>
+        <span class="badge bg-primary text-light mr-2">{{ article_detail.category }}</span>
+        <p class="mt-4">{{ article_detail.body }}</p>
 
-        <form action="" class="mt-4">
-          <div class="mb-3">
-            <label for="FormControlInput1" class="form-label">Nombre</label>
-            <input type="email" class="form-control" id="FormControlInput1">
-          </div>
-          <div class="mb-3">
-            <label for="FormControlTextarea1" class="form-label">Deja tu comentario: </label>
-            <textarea class="form-control" id="FormControlTextarea1" rows="3"></textarea>
-          </div>
-          <button type="button" class="btn btn-primary">Enviar</button>
-        </form>
+        <!-- Mostrar comentarios existentes -->
+        <div class="mt-4">
+          <h4>Comentarios</h4>
+          {% for comment in comments %}
+            <div class="card mb-2">
+              <div class="card-body">
+                <h5 class="card-title">{{ comment.user.username }}</h5>
+                <p class="card-text">{{ comment.content }}</p>
+                <p class="text-muted">{{ comment.created_date }}</p>
+              </div>
+            </div>
+          {% empty %}
+            <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
+          {% endfor %}
+        </div>
+
+        <!-- Formulario para nuevo comentario -->
+        <div class="mt-4">
+          <h4>Deja un comentario</h4>
+          <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Enviar comentario</button>
+          </form>
+        </div>
       </div>
     </main>
   </div>
-
-
-  {% endblock  %} 
+{% endblock %}

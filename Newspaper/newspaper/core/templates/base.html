@@ -44,15 +44,21 @@
         <div class="col-4 col-sm-3 text-end">
           <!-- Botones (mostrados en pantallas medianas y grandes) -->
           <div id="collapseButtons" class="collapse d-sm-block">
-            <a class="link-secondary me-3 d-none d-sm-inline" href="#" aria-label="Search">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
-                stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img"
-                viewBox="0 0 24 24">
-                <title>Search</title>
-                <circle cx="10.5" cy="10.5" r="7.5"></circle>
-                <path d="M21 21l-5.2-5.2"></path>
-              </svg>
-            </a>
+            <form method="GET" action="{% url 'buscar_noticias' %}">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Buscar noticias..." aria-label="Buscar noticias" aria-describedby="search-icon">
+                <button class="btn btn-outline-secondary" type="submit" id="search-icon" aria-label="Search">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img"
+                    viewBox="0 0 24 24">
+                    <title>Search</title>
+                    <circle cx="10.5" cy="10.5" r="7.5"></circle>
+                    <path d="M21 21l-5.2-5.2"></path>
+                  </svg>
+                </button>
+              </div>
+            </form>
+          </div>
             
             <button id="modoBtn" class="btn btn-primary">Cambiar Modo</button>
 

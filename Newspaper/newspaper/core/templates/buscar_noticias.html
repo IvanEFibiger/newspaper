@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Resultados de la búsqueda</h2>
+
+    {% if resultados %}
+      <p>Mostrando resultados para: "{{ query }}"</p>
+      <div class="row">
+        {% for article in resultados %}
+          <div class="col-md-4 mb-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <h3 class="mb-0">{{ article.title }}</h3>
+                <div class="mb-1 text-muted">{{ article.published_date|date:"M d" }}</div>
+                <p class="mb-auto">{{ article.summary }}</p>
+                <a href="{% url 'article_detail' article.id %}" class="btn btn-primary">Leer más</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No se encontraron resultados para "{{ query }}".</p>
+    {% endif %}
+  </div>
+{% endblock %}

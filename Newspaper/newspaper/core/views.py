@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from .forms import CustomUserCreationForm, CommentForm  
 from django.contrib import messages
+from django.db.models import Q  
 
 
 
@@ -138,7 +139,7 @@ def registrarse(request):
     return render(request, 'registrarse.html', {'form': form})
 
 
-@login_required
+@login_required(login_url='iniciar_sesion')
 def article_detail_view(request, pk):
     # Obtener el artículo por su PK o mostrar error 404 si no existe
     article = get_object_or_404(Article, pk=pk)
@@ -166,3 +167,20 @@ def article_detail_view(request, pk):
         'form': form,
     }
     return render(request, 'articulo.html', context)
+
+
+
+
+@login_required(login_url='iniciar_sesion')
+def buscar_noticias(request):
+    query = request.GET.get('q')  # Obtener el término de búsqueda desde los parámetros GET
+    resultados = []
+
+    if query:
+        # Buscar en los campos 'title', 'lead', y 'body' que contengan el término buscado
+        resultados = Article.objects.filter(
+            Q(title__icontains=query) | Q(lead__icontains=query) | Q(body__icontains=query)
+        ).order_by('-published_date')
+
+    # Renderizar una plantilla de resultados con las noticias encontradas
+    return render(request, 'buscar_noticias.html', {'resultados': resultados, 'query': query})

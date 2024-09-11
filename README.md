@@ -40,30 +40,31 @@ Este proyecto se centra principalmente en la práctica del framework Django, imp
 
 ---
 
+
 ## Instalación
 
 ### Clonar el repositorio:
 ```bash
 git clone https://github.com/usuario/newspaper.git
-cd newspaper
+cd newspaper```
 
 ### Crear un entorno virtual:
 ```bash
 python -m venv env
 source env/bin/activate  # Para Linux y Mac
-env\Scripts\activate  # Para Windows
+env\Scripts\activate```  # Para Windows
 
 ### Migrar la base de datos:
 ```bash
-python manage.py migrate
+python manage.py migrate```
 
 ### Crear un superusuario:
 ```bash
-python manage.py createsuperuser
+python manage.py createsuperuser```
 
 ### Iniciar el Servidor
 ```bash
-python manage.py runserver
+python manage.py runserver```
 
 ## Cómo agregar editores y usuarios de staff
 
@@ -71,12 +72,14 @@ Para agregar usuarios como editores (staff), puedes hacerlo desde la consola de 
 
 ### Accede a la shell de Django:
 ```bash
-python manage.py shell
+python manage.py shell```
 ```python
 from django.contrib.auth.models import User
 user = User.objects.get(username='nombre_de_usuario')
 user.is_staff = True  # Asigna como staff
 user.save()
+```
+---
 
 ## Posibles mejoras futuras
 - 🔍 Implementar búsqueda avanzada por artículos.
@@ -89,6 +92,7 @@ Las contribuciones son bienvenidas. Si deseas colaborar, por favor abre un issue
 
 ## Licencia
 Este proyecto está bajo la [Licencia MIT](https://opensource.org/licenses/MIT).
+
 
 
 
